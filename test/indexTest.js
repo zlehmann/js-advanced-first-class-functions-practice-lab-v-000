@@ -1,47 +1,72 @@
 const expect = chai.expect;
 
 describe('drivers', function() {
-  describe('findMatching', function() {
-    it('returns all drivers that match the passed in name', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "Bobby"]
-      expect(findMatching(drivers, 'Bobby')).to.eql(["Bobby", "Bobby"])
-      expect(findMatching(drivers, 'Sammy')).to.eql(["Sammy"])
+  let drivers = [{name: 'Bobby', hometown: 'Pittsburgh', revenue: 3000},
+  {name: 'Sammy', hometown: 'New York', revenue: 2000}, {name: "Sally", hometown: 'Pittsburgh', revenue: 2500},
+  {name: "Annette", hometown: "Los Angelos", revenue: 6000}, {name: "Bobby", hometown: "Tampa Bay", revenue: 5000}]
+
+  describe('logDriverNames', function() {
+    let spy;
+
+    beforeEach(()=> {
+      spy = sinon.spy(console, 'log');
     })
 
-    it('returns matching drivers if case does not match but letters do', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "bobby"]
-      expect(findMatching(drivers, 'Bobby')).to.eql(["Bobby", "bobby"])
-    })
-
-    it('returns an empty array if there is no match', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "bobby"]
-      expect(findMatching(drivers, 'Susan')).to.eql([])
-    })
-  })
-
-  describe('fuzzyMatch', function() {
-    it('returns a driver if beginning provided letters match', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "bobby"]
-      expect(fuzzyMatch(drivers, 'Sa')).to.have.members(["Sammy", "Sarah", "Sally"])
-    })
-
-    it('does not return drivers if only middle or ending letters match', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "bobby"]
-      expect(fuzzyMatch(drivers, 'y')).to.have.members([])
-    })
-
-    it('does not return drivers if only middle or ending letters match', function() {
-      let drivers = ['Bobby', 'Sammy', "Sally", "Annette", "Sarah", "bobby"]
-      expect(fuzzyMatch(drivers, 'mm')).to.have.members([])
+    afterEach(() => {
+      spy.restore();
+    });
+    it("logs each of the driver's names", function() {
+      logDriverNames(drivers)
+      expect(spy.calledWithExactly("Bobby")).to.be.true
+      expect(spy.calledWithExactly("Sammy")).to.be.true
+      expect(spy.calledWithExactly("Sally")).to.be.true
+      expect(spy.calledWithExactly("Annette")).to.be.true
+      expect(spy.calledWithExactly("Bobby")).to.be.true
     })
   })
 
-  describe('matchName', function() {
-    it('accesses the data structure to check if name matches', function() {
-      let drivers = [{name: 'Bobby', hometown: 'Pittsburgh'},
-      {name: 'Sammy', hometown: 'New York'}, {name: "Sally", hometown: 'Cleveland'},
-      {name: "Annette", hometown: "Los Angelos"}, {name: "Bobby", hometown: "Tampa Bay"}]
-      expect(matchName(drivers, 'Bobby')).to.eql([{name: 'Bobby', hometown: 'Pittsburgh'}, {name: "Bobby", hometown: "Tampa Bay"}])
+  describe('logDriversByHometown', function(){
+    let spy;
+
+    beforeEach(()=> {
+      spy = sinon.spy(console, 'log');
+    })
+
+    afterEach(() => {
+      spy.restore();
+    });
+
+    it("logs each of the driver's names if they are from passed through hometown", function() {
+      logDriversByHometown(drivers, "Pittsburgh")
+      expect(spy.calledWithExactly("Bobby")).to.be.true
+      expect(spy.calledWithExactly("Sally")).to.be.true
+      expect(spy.calledWithExactly("Annette")).to.not.be.true
+    })
+  })
+  
+  describe('driversByRevenue', function() {
+    it('uses the sort function to returns the drivers from lowest to highest by the revenue they brought in', function() {
+      expect(driversByRevenue(drivers)[0].name).to.eql("Sammy")
+      expect(driversByRevenue(drivers)[drivers.length -1].name).to.eql("Annette")
+    })
+  })
+
+  describe('driversByName', function() {
+    it('uses the sort function to returns the drivers alphabetically by their name (A to Z)', function() {
+      expect(driversByName(drivers)[0].name).to.eql("Annette")
+      expect(driversByName(drivers)[drivers.length -1].name).to.eql("Sammy")
+    })
+  })
+
+  describe('totalRevenue', function(){
+    it('uses reduce to adds every driver revenue to return the total revenue', function(){
+      expect(totalRevenue(drivers)).to.equal(18500)
+    })
+  })
+
+  describe('averageRevenue', function(){
+    it('calculates the average revenue', function(){
+      expect(averageRevenue(drivers)).to.equal(3700)
     })
   })
 })

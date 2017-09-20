@@ -1,8 +1,12 @@
-# JavaScript Filter Lab
+Functions - forEach, reduce, sort
+---
+
+## Objectives
+1. Practice using forEach
+2. Practice using sort
+3. Practice using reduce
 
 ## Overview
-
-In this lab, we'll use the `filter` method to write functions that properly query our data.
 
 ## Instructions
 
