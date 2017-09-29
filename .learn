@@ -1,11 +1,8 @@
 tags:
-  - learn.co
-  - flatiron school
-  - javascript
   - forEach
   - sort 
   - reduce
-  - code-along
+  - lab
 languages:
   - javascript
 resources:
