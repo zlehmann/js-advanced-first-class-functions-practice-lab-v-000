@@ -1,7 +1,5 @@
 # First-Class Functions Practice Lab
 
-hello
-
 ## Objectives
 1. Practice using forEach
 2. Practice using sort
