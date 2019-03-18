@@ -20,3 +20,11 @@ const driversByRevenue = function (drivers) {
   });
   return result;
 }
+
+const driversByName = function (drivers) {
+  let result = drivers.map(n => n);
+  result.sort(function(a,b) {
+    return a.name.localeCompare(b.name);
+  });
+  return result;
+}
