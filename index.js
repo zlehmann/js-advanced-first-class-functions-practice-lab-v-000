@@ -28,3 +28,11 @@ const driversByName = function (drivers) {
   });
   return result;
 }
+
+const totalRevenue = function (drivers) {
+  let result = 0;
+  drivers.forEach(function (driver) {
+    result += driver.revenue;
+  });
+  return result;
+}
