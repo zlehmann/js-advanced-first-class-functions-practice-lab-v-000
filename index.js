@@ -36,3 +36,13 @@ const totalRevenue = function (drivers) {
   });
   return result;
 }
+
+const averageRevenue = function (drivers) {
+  let result = 0;
+  let count = drivers.length();
+  drivers.forEach(function (driver) {
+    result += driver.revenue;
+  });
+  result = result/count;
+  return result;
+}
