@@ -12,3 +12,11 @@ const logDriversByHometown = function (drivers, location) {
     }
   });
 }
+
+const driversByRevenue = function (drivers) {
+  let result = [];
+  result.forEach(function(driver) {
+    result.push(driver.revenue);
+  });
+  return result.sort();
+}
